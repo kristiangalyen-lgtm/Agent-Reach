@@ -1,0 +1,1308 @@
+MASTER CLAUDE CODE PROMPT v1.1
+NQ PREMARKET ENVIRONMENTAL INTELLIGENCE SCANNER
+AGENT REACH ARCHITECTURE FOUNDATION
+
+PART 2 OF 2 — CONTINUATION
+
+This file continues:
+
+planning/MASTER_CLAUDE_CODE_PROMPT_v1.1_PART_1.md
+
+Both files form one authoritative specification.
+
+Do not interpret this file independently from Part 1.
+
+============================================================
+20. REPORT REQUIREMENTS — CONTINUED
+============================================================
+
+------------------------------------------------------------
+10:00 ET REPORT
+------------------------------------------------------------
+
+Type:
+
+Brief delayed post-open environmental state check
+
+Required disclosure:
+
+“This state check uses delayed public market observations. It does
+not represent live chart, order-flow, market-depth, breadth, or
+execution analysis.”
+
+Target reading time:
+
+- Approximately 2–4 minutes
+
+Show:
+
+- Report metadata
+- Market-observation timestamps
+- Estimated public-data delay
+- Coverage changes
+- New verified facts since 9:00 ET
+- Released or revised events since 9:00 ET
+- Delayed post-open observations
+- Premarket thesis status
+- Regime status
+- Long-environment status
+- Short-environment status
+- Classification-confidence changes
+- Directional-evidence-strength changes
+- Confirmation and rejection ledger
+- Remaining contradictions
+- Missing information
+- Later-session risks
+- Expiration and limitations
+
+Premarket thesis status must use one of:
+
+- CONFIRMED
+- PARTIALLY CONFIRMED
+- REJECTED
+- UNCLEAR
+- NOT TESTABLE
+
+Definitions:
+
+CONFIRMED
+
+The primary premarket interpretation is supported by the available
+delayed post-open observations.
+
+PARTIALLY CONFIRMED
+
+Some central elements are supported, but meaningful contradictions
+or missing confirmation remain.
+
+REJECTED
+
+The available delayed observations materially conflict with the
+premarket interpretation.
+
+UNCLEAR
+
+Evidence remains mixed, unstable, or insufficiently developed to
+classify the thesis as confirmed or rejected.
+
+NOT TESTABLE
+
+Critical observations are unavailable, stale, invalid, or otherwise
+unable to test the premarket interpretation.
+
+The 10:00 ET report must explain:
+
+- Which parts of the premarket thesis were confirmed
+- Which parts were not confirmed
+- Which parts were contradicted
+- Which parts could not be tested
+- Whether the primary regime changed
+- Whether long or short environmental classifications changed
+- Why any confidence level changed
+
+The report must not claim knowledge of:
+
+- Live order flow
+- Executable price
+- Market depth
+- Bid or ask absorption
+- Footprint behavior
+- Live breadth
+- Proprietary levels
+- The user’s chart context
+
+------------------------------------------------------------
+REQUIRED ENDING FOR EVERY REPORT
+------------------------------------------------------------
+
+Every report must end with:
+
+ENVIRONMENTAL BOTTOM LINE
+[Concise environmental synthesis]
+
+EXPIRATION
+[Applicable expiration time or staleness condition]
+
+RESEARCH-ONLY BOUNDARY
+Environmental research only. No valid setup or entry is implied.
+The scanner is separate from charts, mapped levels, quantitative
+strategies, order-flow analysis, broker systems, and execution.
+Independent confirmation remains required.
+
+The research-only boundary must not be omitted, abbreviated into
+trading language, or replaced with an execution recommendation.
+
+============================================================
+21. VERSION 1 SCHEDULING MODEL
+============================================================
+
+Version 1 uses discrete scheduled collection and processing runs.
+
+Do not assume:
+
+- A persistent daemon
+- A permanent background process
+- Continuous overnight collection
+- An always-on service
+- A cloud-hosted scheduler
+
+Continuous background collection is deferred to a later version.
+
+For Version 1, propose a cron-equivalent, systemd-timer,
+Task-Scheduler, launchd, APScheduler, or other operating-system-
+appropriate schedule only after inspecting the actual operating
+environment.
+
+Potential discrete runs may include:
+
+- One or more overnight collection runs
+- Focused Deep-report processing around 7:15 ET
+- Source and capability health checks around 7:45 ET
+- Focused Exa gap and contradiction searches around 7:50 ET
+- Final delayed market observations around 7:55 ET
+- Deep report generation around 8:00 ET
+- Incremental processing shortly before 9:00 ET
+- Incremental processing shortly before 10:00 ET
+
+All scheduling uses:
+
+America/New_York
+
+Report target times are approximately:
+
+- 8:00 ET
+- 9:00 ET
+- 10:00 ET
+
+These are target times, not fabricated exact-completion guarantees.
+
+Every run must preserve:
+
+- Run ID
+- Report date
+- Target report time
+- Actual process start time
+- Actual completion time
+- Evidence cutoff time
+- Oldest critical market observation
+- Newest critical market observation
+- Estimated market-data delay
+- Previous run ID
+- Baseline run ID where applicable
+
+If an 8:00 ET report completes at 8:04 ET, the report must state:
+
+- Target time: 8:00 ET
+- Actual generation time: 8:04 ET
+- Actual evidence cutoff
+
+It must not imply that it completed at 8:00 ET.
+
+Do not choose or implement the final scheduler during this
+architecture-foundation session.
+
+Under Unresolved Design Decisions:
+
+- Identify the operating system
+- Identify reasonable scheduling options
+- Explain the tradeoffs
+- Recommend the next validation step
+- State whether owner approval is required
+
+============================================================
+22. STORAGE AND STATE DIRECTION
+============================================================
+
+The finalized Version 1 storage direction is:
+
+- SQLite for structured operational state and relationships
+- Local filesystem for reports and evidence artifacts
+
+SQLite is intended for a local, single-user first version unless
+repository or environment inspection identifies a concrete reason
+that it is unsuitable.
+
+Candidate entity families include:
+
+- Runs
+- Sources
+- Source health
+- Capability health
+- Raw items
+- Documents
+- Transcripts
+- Evidence
+- Evidence state history
+- Evidence relationships
+- Evidence clusters
+- Calendar events
+- Market observations
+- Narratives
+- Regime assessments
+- Directional assessments
+- Confidence assessments
+- Reports
+- Human feedback
+- System events
+
+Do not design all final tables or migrations during this first
+session.
+
+For this architecture-foundation session:
+
+- Confirm whether SQLite is suitable
+- Identify major data ownership boundaries
+- Identify which artifacts belong in SQLite
+- Identify which artifacts belong in files
+- Identify lineage requirements
+- Identify major indexing requirements
+- Identify migration and schema-versioning needs
+- Identify transaction boundaries
+- Identify backup considerations
+- Identify any concurrency concerns created by scheduled runs
+
+Suggested filesystem direction:
+
+data/
+├── reports/
+│   └── YYYY-MM-DD/
+│       ├── 0800_deep.md
+│       ├── 0800_deep.json
+│       ├── 0900_delta.md
+│       ├── 0900_delta.json
+│       ├── 1000_state_check.md
+│       └── 1000_state_check.json
+├── documents/
+├── transcripts/
+├── raw/
+├── logs/
+├── feedback/
+└── exports/
+
+The exact layout is subject to architecture review.
+
+Secrets, cookies, credentials, and environment-variable dumps must
+never be stored in these directories.
+
+------------------------------------------------------------
+RETENTION DIRECTION
+------------------------------------------------------------
+
+The current intended retention policy is:
+
+- Markdown reports: indefinite
+- JSON report states: indefinite
+- Structured evidence metadata: indefinite
+- Source-health history: 365 days
+- Cleaned documents: 180 days
+- Cleaned transcripts: 180 days
+- Raw responses: 30 days
+- Temporary files: 7 days
+- Operational logs: 90 days
+
+These values must ultimately live in versioned configuration.
+
+Do not implement cleanup behavior during this first session.
+
+============================================================
+23. CONFIGURATION, NOT PROMPT MEMORY
+============================================================
+
+The source registry—not prompt memory—must ultimately control:
+
+- Exact source URLs
+- Endpoints
+- Authority tiers
+- Market-observation classes
+- Permitted source roles
+- Retrieval methods
+- Operational criticality
+- Fact eligibility
+- Upgrade requirements
+- Provenance requirements
+- Freshness rules
+- Health-check methods
+- Fallbacks
+- Terms-review status
+- Validation status
+- Enabled or disabled state
+
+The source, instrument, calendar, earnings, authority, regime,
+confidence, retention, and budget lists in Parts 1 and 2 are seed
+values for versioned configuration files.
+
+They must not remain hard-coded in runtime reasoning prompts.
+
+Future policy and configuration artifacts should include:
+
+- source_registry.yaml
+- youtube_channels.yaml
+- instruments.yaml
+- market_symbols.yaml
+- calendars.yaml
+- calendar_priorities.yaml
+- earnings_universe.yaml
+- exa_queries.yaml
+- authority_tiers.yaml
+- market_observation_classes.yaml
+- source_roles.yaml
+- controlled_vocabularies.yaml
+- evidence_clusters.yaml
+- morning_archetypes.yaml
+- cluster_weights.yaml
+- regime_vocabulary.yaml
+- directional_thresholds.yaml
+- confidence_caps.yaml
+- report_schemas.yaml
+- retention.yaml
+- run_budgets.yaml
+- retry_policy.yaml
+- security_policy.yaml
+
+The running system should read these values from versioned
+configuration.
+
+A system that requires editing an LLM reasoning prompt merely to:
+
+- Add a source
+- Remove a source
+- Change a source URL
+- Disable a source
+- Change a market symbol
+- Change a budget
+- Change a threshold
+
+is a design failure.
+
+Final policy-file contents are deferred to a later architecture
+session.
+
+============================================================
+24. MARKET-SYMBOL VERIFICATION SCOPE
+============================================================
+
+Every future provider symbol must be tested for:
+
+- Availability
+- Intraday-bar support
+- Observation timestamps
+- Retrieval timestamps
+- Previous-close behavior
+- Time-zone handling
+- Missing bars
+- Session boundaries
+- Contract identity
+- Futures rollover
+- Unexplained discontinuities
+- Data freshness
+- Provider-specific limitations
+- Stable normalization
+
+Do not assume a symbol mapping is correct merely because it returns
+a value.
+
+A provider can return data for:
+
+- The wrong contract
+- A stale contract
+- A continuous contract with rollover artifacts
+- A proxy rather than the intended instrument
+- A delayed or incomplete session
+- A misleading previous close
+
+------------------------------------------------------------
+CURRENT SESSION SYMBOL-TESTING LIMIT
+------------------------------------------------------------
+
+During this architecture-foundation session:
+
+- Define the complete verification method.
+- Test only a minimal representative subset when safe and
+  practical.
+- Do not attempt full-universe market-symbol verification.
+
+The representative subset may include:
+
+- NQ or its proposed yfinance symbol
+- VXN
+- HYG
+- One approved Treasury-yield, Treasury-futures, or duration
+  representation
+
+Full-universe verification is deferred to the market-observation
+implementation phase.
+
+Symbol testing must not expand this session beyond deliverables
+A–E, N, and O.
+
+------------------------------------------------------------
+RATES-UNIVERSE OWNER DECISION
+------------------------------------------------------------
+
+The following may be considered lower-priority candidates for
+initial Version 1 deferral while remaining in the longer-term
+specification:
+
+- USD/CNH
+- Copper
+- International indices
+- BTC
+
+Do not automatically defer:
+
+- U.S. 30-year yield
+- ZB
+
+They were assigned meaningful rates and duration relevance in the
+finalized design.
+
+Evaluate their:
+
+- Public-data availability
+- Freshness
+- Reliability
+- Incremental analytical value
+- Provider coverage
+- Runtime cost
+
+Place the question of their initial inclusion under Unresolved
+Design Decisions.
+
+ZF may also be evaluated as a secondary rates input rather than
+silently included or excluded.
+
+============================================================
+25. BLS REACHABILITY AND LATENCY VALIDATION
+============================================================
+
+During the architecture-foundation session, test current BLS
+reachability and content validity only when safe and practical.
+
+Do not wait for a live 8:30 ET release.
+
+Define a future method for measuring retrieval latency around an
+actual release.
+
+Schedule actual live-release latency measurement for the first
+eligible 8:30 ET release after the initial source-validation module
+exists.
+
+The future latency test should record:
+
+- Event name
+- Official scheduled time
+- First successful official retrieval time
+- First valid actual value time
+- First valid revision information time
+- Retrieval route
+- Source URL
+- Response status
+- Payload timestamp
+- Operator network class
+- Scanner version
+- Source-registry version
+
+Current-session BLS objectives are limited to:
+
+- Direct reachability from the operator’s intended network
+- Official page reachability
+- Official schedule reachability
+- Official feed reachability if a current feed exists
+- api.bls.gov reachability
+- Current payload validity
+- Required field availability
+- Access-control behavior
+- Permitted-use constraints
+
+Do not proxy around an explicit bot restriction.
+
+If official access remains unavailable:
+
+- Record the failure
+- Identify sanctioned alternatives
+- Explain classification consequences
+- Surface it under Unresolved Design Decisions
+- Do not fabricate Tier 1 coverage
+
+============================================================
+26. LATENCY AND WORKLOAD FEASIBILITY
+============================================================
+
+The intended maximum future Deep processing window is 25 minutes.
+
+Candidate maximum workloads currently include:
+
+- Up to 30 Jina documents
+- Up to 15 video transcripts
+- Up to 15 Exa queries
+- Up to 10 Exa results per query
+- Up to 40 full-text LLM items
+
+Do not assume this workload is feasible within 25 minutes.
+
+Under Implementation Readiness, provide a preliminary latency and
+workload assessment based on:
+
+- Verified Agent Reach execution model
+- Import versus CLI overhead
+- Sequential versus parallel opportunities
+- Expected network latency
+- Jina latency
+- Exa latency
+- Transcript fragility
+- Subtitle retrieval behavior
+- LLM-call count
+- Context size
+- Retry behavior
+- Rate limits
+- Circuit-breaker behavior
+- Failure handling
+- Validation overhead
+- Markdown/JSON rendering overhead
+
+If the target workload is not realistic:
+
+- Recommend lower starting budgets
+- Preserve the approximate report target
+- Do not solve the problem merely by extending the deadline
+- Prioritize critical official sources
+- Defer optional sources
+- Use incremental caching
+- Avoid reprocessing unchanged items
+
+Report separately:
+
+- Desired source count
+- Verified-documented source count
+- Verified-reachable source count
+- Source count requiring runtime tests
+- Source count requiring terms review
+- Expected critical-source workload
+- Expected optional-source workload
+
+Do not assume complete reachability across the desired institutional
+source universe.
+
+============================================================
+27. PROCESSING PRIORITY, RETRIES, AND CIRCUIT BREAKERS
+============================================================
+
+When runtime or retrieval limits are reached, process in this order:
+
+1. Critical official releases
+2. Critical scheduled events
+3. Direct policymaker and executive statements
+4. Material NQ company releases
+5. Critical market observations
+6. Reputable original breaking reporting
+7. Exa gap and contradiction searches
+8. Professional analysis
+9. Contextual financial media
+10. Optional commentary
+
+Optional work must stop before critical work is dropped.
+
+Critical official sources may be exempt from normal item-count
+cutoffs when necessary.
+
+------------------------------------------------------------
+FALLBACK AUTHORITY
+------------------------------------------------------------
+
+Fallbacks must never upgrade source authority.
+
+Examples:
+
+- A media summary used because an official transcript failed
+  remains Tier 3 media reporting.
+- Automatic captions remain automatic captions.
+- An Exa-discovered source retains the underlying publisher’s
+  authority.
+- A proxy market instrument remains a proxy.
+- A commentary statement about price behavior remains discovery
+  information until validated by an approved market-data source.
+
+Use the policy:
+
+fallback_authority_upgrade: prohibited
+
+------------------------------------------------------------
+INITIAL RETRY DIRECTION
+------------------------------------------------------------
+
+Future retry policy should begin from:
+
+Critical source:
+
+- Maximum attempts: 3
+- Backoff: exponential
+
+High-priority source:
+
+- Maximum attempts: 2
+
+Contextual source:
+
+- Maximum attempts: 1
+
+Future circuit-breaker starting point:
+
+- Open after 3 consecutive failures
+- Retry after 30 minutes
+
+Failure categories should include:
+
+- TIMEOUT
+- RATE LIMITED
+- ACCESS RESTRICTED
+- AUTHENTICATION FAILURE
+- EMPTY CONTENT
+- INVALID DATA
+- STALE DATA
+- SOURCE REMOVED
+- PROVIDER OUTAGE
+- TERMS RESTRICTED
+- UNKNOWN
+
+Do not implement retries or circuit breakers during this first
+session.
+
+Evaluate their fit with Agent Reach’s existing behavior and report
+relevant conflicts or duplication.
+
+============================================================
+28. PUBLICATION INTEGRITY DIRECTION
+============================================================
+
+The future implementation must not publish a normal report unless
+deterministic publication checks pass.
+
+Required future checks include:
+
+- Report metadata complete
+- America/New_York time valid
+- Actual run time present
+- Actual completion time present
+- Evidence cutoff present
+- Coverage status calculated
+- Critical failures disclosed
+- Source conflicts disclosed
+- Directional statuses valid
+- Status and confidence compatible
+- Expiration present
+- Contradiction section present
+- Missing-information section present
+- Evidence IDs mapped to sources
+- Required source URLs retained
+- No unsupported predictive probabilities
+- No technical levels
+- No position-sizing language
+- No entry instructions
+- No exit instructions
+- No execution instructions
+- No order-flow claims
+- No secrets
+- Markdown and JSON statuses match
+- Markdown and JSON confidence labels match
+- Markdown and JSON expiration states match
+- Canonical state validates against its schema
+
+If a publication gate fails:
+
+- Suppress the polished normal report.
+- Generate a degraded or error report.
+- State which checks failed.
+- Preserve the invalid state for debugging when safe.
+- Do not hide the failure behind polished prose.
+
+Do not design the complete publication-gate implementation during
+this architecture-foundation session.
+
+Confirm its architectural placement and ownership.
+
+============================================================
+29. SHADOW MODE AND EVALUATION
+============================================================
+
+Future shadow mode must run for:
+
+- Minimum 20 trading days
+- Preferably 30 trading days
+
+During shadow mode:
+
+- The scanner runs on schedule.
+- Reports are archived.
+- The user continues the existing independent process.
+- Scanner output remains reference-only.
+- No execution process changes because of scanner output.
+- Errors and omissions are logged.
+- Source usefulness is reviewed.
+- Confidence frequency is measured.
+- Report length is calibrated.
+- Morning-archetype selection is evaluated.
+- Contradiction quality is reviewed.
+
+Evaluate the scanner using:
+
+RETRIEVAL QUALITY
+
+- Critical-source success rate
+- Extraction completeness
+- Transcript availability
+- Calendar accuracy
+- Market-data freshness
+- Duplicate rate
+- Correction detection
+- Fallback use
+
+EVIDENCE QUALITY
+
+- Percentage of claims supported by Tier 1 or Tier 2
+- Claims with complete provenance
+- Incorrect-fact rate
+- Provisional facts later confirmed
+- Provisional facts later rejected
+- Source-concentration frequency
+
+REASONING QUALITY
+
+- Dominant-catalyst quality
+- Contradiction quality
+- Causal-overstatement rate
+- Unsupported strong-classification rate
+- Deterministic downgrade frequency
+- Human disagreement rate
+- Morning-archetype quality
+
+REPORT USEFULNESS
+
+- Reading time
+- Redundancy
+- Missed material events
+- Irrelevant information
+- Bottom-line clarity
+- Appendix usability
+
+OPERATIONAL RELIABILITY
+
+- Completion-time reliability
+- Degraded-report frequency
+- Total failures
+- Provider-outage resilience
+- Average runtime
+- Average retrieval volume
+
+Do not evaluate solely by subsequent NQ direction.
+
+A report can correctly identify an adverse rates environment while
+NQ later rises for a separate catalyst or factor outside the
+scanner’s evidence.
+
+Evaluate whether:
+
+- Facts were correct
+- Sources were appropriate
+- Interpretation was defensible
+- Contradictions were disclosed
+- Confidence was appropriate
+- Classification met evidence requirements
+- Later information invalidated the assessment
+- The report was useful as environmental research
+
+============================================================
+30. PRODUCTION-READINESS CRITERIA
+============================================================
+
+The scanner may exit shadow mode only after:
+
+1. Critical-source success is acceptable.
+2. Calendar times are reliable.
+3. Source-authority rules are enforced.
+4. Prompt-injection tests pass.
+5. Secret-leakage tests pass.
+6. No secrets appear in reports or logs.
+7. Markdown and JSON remain consistent.
+8. Strong classifications satisfy evidence requirements.
+9. Missing data visibly reduces confidence.
+10. Reports complete within configured runtime limits.
+11. Provider failures degrade gracefully.
+12. Human review finds reports consistently useful.
+13. Report length is appropriate.
+14. The evidence appendix is auditable.
+15. No prohibited execution language appears.
+
+Production readiness means:
+
+“Reliable enough to serve as a morning research reference.”
+
+It does not mean:
+
+“Proven to predict NQ direction.”
+
+Do not implement shadow-mode evaluation tooling during this first
+session.
+
+Confirm its architectural boundary and identify what data must be
+preserved to support it later.
+
+============================================================
+31. VERSION 1 EVENT-TRIGGERED BEHAVIOR
+============================================================
+
+Version 1 produces only the three scheduled reports.
+
+If material evidence appears between scheduled reports:
+
+1. Mark the current assessment stale.
+2. Record the triggering event.
+3. Preserve the evidence for the next scheduled run.
+4. Do not automatically create a special report.
+
+Use:
+
+STALE — REASSESSMENT REQUIRED
+
+Automatic event-triggered special reports are deferred to a later
+version after reliability is established.
+
+============================================================
+32. CURRENT SESSION DELIVERABLE A
+REPOSITORY CAPABILITY MAP
+============================================================
+
+For each required capability, report:
+
+- Capability name
+- Existing implementation
+- Exact repository path
+- Entry point
+- Dependencies
+- Existing tests
+- Documented behavior
+- Behavior verified by source inspection
+- Behavior verified by tests
+- Behavior verified through safe runtime checks
+- Importable or CLI-only
+- Signature or command form
+- Current limitations
+- Security considerations
+- Safe reuse status
+- Required scanner adapter, if any
+- Required Agent Reach extension, if any
+- Verification confidence
+
+At minimum cover:
+
+- Public web retrieval
+- Jina integration
+- RSS and Atom
+- YouTube metadata
+- Channel and playlist handling
+- Subtitle retrieval
+- Automatic captions
+- Transcript fallback
+- Exa or semantic search
+- GitHub functionality where relevant
+- Configuration
+- CLI execution
+- Backend routing
+- Diagnostics
+- Health checks
+- URL validation
+- Credential handling
+- Secret redaction
+- Structured output
+- Scheduling, if any
+- State or storage, if any
+- Retry behavior, if any
+- Circuit-breaking behavior, if any
+
+Distinguish clearly between:
+
+- Documented
+- Tested
+- Source-inspected
+- Runtime-verified
+- Assumed
+- Missing
+
+Do not describe assumed behavior as verified behavior.
+
+============================================================
+33. CURRENT SESSION DELIVERABLE B
+CURRENT AGENT REACH ARCHITECTURE
+============================================================
+
+Provide an evidence-backed description of the current repository.
+
+Include:
+
+- High-level module map
+- Package map
+- CLI map
+- Channel map
+- Backend-routing map
+- Configuration map
+- Diagnostic map
+- Credential-boundary map
+- Process-execution map
+- Relevant security controls
+- Import-versus-CLI findings
+- Current Git commit SHA
+- Current Python and packaging expectations
+- Identified extension points
+- Identified unstable or private interfaces
+
+Use concise Mermaid diagrams where they improve understanding.
+
+Do not create diagrams unsupported by repository evidence.
+
+Every important architectural claim should cite:
+
+- Exact file path
+- Relevant class, function, or entry point
+- Test path where applicable
+
+============================================================
+34. CURRENT SESSION DELIVERABLE C
+SCANNER GAP ANALYSIS
+============================================================
+
+Classify every major scanner requirement as one of:
+
+- ALREADY SUPPORTED
+- SUPPORTED WITH CONFIGURATION
+- SUPPORTED WITH SCANNER ADAPTER
+- REQUIRES NEW SCANNER MODULE
+- REQUIRES AGENT REACH EXTENSION
+- DEFERRED FROM VERSION 1
+- REQUIRES SOURCE VERIFICATION
+- REQUIRES TERMS REVIEW
+- UNRESOLVED OWNER DECISION
+
+At minimum classify:
+
+- Source registry
+- Fixed-source monitoring
+- Feedparser integration
+- Jina retrieval
+- YouTube metadata
+- Transcript retrieval
+- Transcript fallback
+- Exa discovery
+- Calendar intelligence
+- Consensus data
+- Market observations
+- Symbol verification
+- Timestamp normalization
+- Deduplication
+- Syndication grouping
+- Revision tracking
+- Source authority
+- Source concentration
+- Evidence lifecycle
+- Evidence extraction
+- Evidence validation
+- Evidence clustering
+- Narrative synthesis
+- Contradiction search
+- Morning-archetype selection
+- Regime classification
+- Directional assessment
+- Confidence validation
+- Canonical report state
+- Markdown rendering
+- JSON rendering
+- SQLite persistence
+- Filesystem artifacts
+- Scheduling
+- Health monitoring
+- Publication integrity
+- Shadow-mode evaluation
+- Human feedback
+- Security controls
+
+For each gap provide:
+
+- Current state
+- Evidence from the repository
+- Target state
+- Recommended ownership
+- Version 1 disposition
+- Primary risk
+- Next validation step
+
+============================================================
+35. CURRENT SESSION DELIVERABLE D
+RECOMMENDED TARGET ARCHITECTURE
+============================================================
+
+Propose the major components and boundaries for the NQ scanner.
+
+At minimum address:
+
+- Agent Reach capability boundary
+- Scanner adapter boundary
+- Shell-execution boundary
+- Untrusted-content boundary
+- Source-registry boundary
+- Collection orchestration
+- Calendar input
+- Consensus input
+- Market observations
+- Raw-item ownership
+- Document and transcript retrieval
+- Normalization
+- Deduplication
+- Evidence extraction
+- Evidence validation
+- Evidence clustering
+- Narrative synthesis
+- Contradiction analysis
+- Morning-archetype validation
+- Regime analysis
+- Directional assessment
+- Confidence validation
+- Canonical report state
+- Markdown rendering
+- JSON rendering
+- SQLite persistence
+- Filesystem artifact storage
+- Scheduling boundary
+- Source and capability health
+- Publication integrity
+- Security policy
+- Evaluation and feedback
+
+For each major component identify:
+
+- Responsibility
+- Owner package
+- Inputs
+- Outputs
+- Trust level
+- Whether it invokes Agent Reach
+- Whether it can execute commands
+- Whether it receives raw untrusted content
+- Whether deterministic validation follows it
+- Dependencies on future owner decisions
+
+Do not design every class, table, or function in this session.
+
+Focus on:
+
+- Ownership
+- Interfaces
+- Data direction
+- Trust boundaries
+- Separation of concerns
+- Agent Reach reuse
+- Scanner-specific responsibility
+- Future detailed-design requirements
+
+============================================================
+36. CURRENT SESSION DELIVERABLE E
+PROPOSED REPOSITORY LAYOUT
+============================================================
+
+Recommend where scanner-specific code, configuration, tests, and
+documentation should live.
+
+Prefer separation from Agent Reach core.
+
+Provide a high-level proposed directory tree.
+
+At minimum identify locations for:
+
+- Scanner package
+- Agent Reach adapters
+- Source adapters
+- Market-data adapters
+- Scheduling or orchestration
+- Configuration
+- Policy files
+- Runtime prompts
+- Storage
+- Database migrations
+- Report renderers
+- Report templates
+- Tests
+- Fixtures
+- Documentation
+- Planning artifacts
+- Runtime artifacts
+- Logs and reports
+
+For each top-level proposed component explain:
+
+- Responsibility
+- Whether it is source-controlled
+- Whether it contains runtime data
+- Whether it may contain untrusted content
+- Whether it may access secrets
+- Whether it may execute commands
+- Whether it belongs inside or outside Agent Reach core
+
+Do not create these files or directories during this session.
+
+============================================================
+37. CURRENT SESSION DELIVERABLE N
+UNRESOLVED DESIGN DECISIONS
+============================================================
+
+List only genuine owner decisions or externally unresolved facts.
+
+Do not ask questions already answered in Parts 1 or 2.
+
+At minimum address:
+
+1. Consensus-data provider
+2. Whether manual consensus input is acceptable
+3. Actual operating system
+4. Scheduling mechanism
+5. Runtime LLM provider
+6. Runtime LLM model
+7. LLM credential approach
+8. BLS access from the operator’s intended network
+9. Reuters discovery and retrieval route
+10. Treasury official access routes
+11. Agent Reach import versus CLI use
+12. Initial critical-source set
+13. Source terms requiring review
+14. Feasibility of the 25-minute Deep run
+15. Initial processing budgets
+16. Initial instrument deferrals
+17. Inclusion of the U.S. 30-year yield
+18. Inclusion of ZB
+19. Treatment of ZF
+20. Audio-transcription fallback timing
+21. Initial international-market scope
+22. Storage root and backup expectations
+23. Whether reports require delivery beyond local Markdown/JSON
+24. Any required API credentials not already available
+
+For each unresolved decision provide:
+
+- Why it matters
+- Current evidence
+- Available options
+- Tradeoffs
+- Recommended next validation step
+- Whether owner approval is required
+- Whether it blocks the first vertical slice
+- Whether it blocks the eventual 8:00 report
+- Whether it may be safely deferred
+
+Do not choose owner-sensitive decisions unilaterally.
+
+============================================================
+38. CURRENT SESSION DELIVERABLE O
+IMPLEMENTATION-READINESS ASSESSMENT
+============================================================
+
+Conclude the architecture-foundation package with:
+
+- Current Agent Reach commit SHA
+- What Agent Reach already supports
+- What can be reused safely
+- What can be built immediately
+- What requires scanner adapters
+- What requires new scanner modules
+- What requires Agent Reach extension
+- What requires source verification
+- What requires terms review
+- What requires credentials
+- What requires owner approval
+- What should be deferred
+- Primary technical risks
+- Primary source-reliability risks
+- Primary security risks
+- Primary operational risks
+- Preliminary Deep-run latency assessment
+- Verified-reachable versus desired source count
+- Readiness of the first vertical slice
+- Recommended next architecture session
+- Recommended first implementation slice
+
+The recommended first implementation slice must be a small,
+end-to-end vertical path.
+
+Preferred pattern:
+
+One verified source
+    ↓
+One safe retrieval path
+    ↓
+One normalized raw item
+    ↓
+One validated evidence object
+    ↓
+One evidence cluster
+    ↓
+One canonical report state
+    ↓
+One Markdown test output
+    ↓
+One matching JSON record
+
+Do not recommend building the entire scanner in one implementation
+phase.
+
+The first vertical slice should prove:
+
+- Agent Reach integration
+- Trust-boundary separation
+- Source provenance
+- Timestamp normalization
+- Evidence validation
+- Storage direction
+- Canonical state generation
+- Markdown/JSON consistency
+- Visible failure handling
+
+============================================================
+39. FINAL SESSION RULES
+============================================================
+
+During this architecture-foundation session:
+
+- Read Part 1 and Part 2 in full before acting.
+- Inspect before proposing.
+- Record the repository commit SHA first.
+- Cite exact repository paths.
+- Distinguish documentation from verified behavior.
+- Distinguish internal functions from supported public interfaces.
+- Do not infer nonexistent capabilities.
+- Do not run unsafe diagnostics.
+- Do not probe authenticated social channels.
+- Do not configure social integrations.
+- Do not read social cookies.
+- Do not modify production code.
+- Do not create scanner production files.
+- Do not activate assumed source URLs.
+- Do not circumvent source access controls.
+- Do not select a consensus provider without owner approval.
+- Do not decide owner-sensitive instrument deferrals unilaterally.
+- Do not produce final schemas.
+- Do not produce the full threat model.
+- Do not produce the full runtime prompt suite.
+- Do not produce the complete test matrix.
+- Do not produce the complete implementation plan.
+- Do not generate a giant implementation.
+- Do not ask for confirmation between routine inspection steps.
+- Label assumptions.
+- Surface genuine unknowns.
+- Favor depth over breadth.
+- Stop after deliverables A–E, N, and O.
+
+Begin by:
+
+1. Confirming that both prompt files were read completely.
+2. Recording the current repository commit SHA.
+3. Inspecting the repository structure.
+4. Reading relevant documentation and tests.
+5. Mapping Agent Reach’s verified capabilities.
+6. Determining import-versus-CLI feasibility.
+7. Producing the scoped architecture-foundation package containing
+   only A–E, N, and O.
